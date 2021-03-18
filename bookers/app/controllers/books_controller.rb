@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+ protect_from_forgery #追記
  def index
    @books = Book.all
    @book = Book.new
@@ -10,7 +11,7 @@ class BooksController < ApplicationController
   #2. データをデータベースに保存するためのsaveメソッド実行
   book.save
   #3.Books画面へリダイレクト → edirect_to '/books'を削除 → 詳細画面へリダイレクト
-  redirect_to book_path(@book.id)
+  redirect_to books_path(book.id)
  end
 
  def show
@@ -24,7 +25,7 @@ class BooksController < ApplicationController
   @book = Book.find(params[:id])
  end
 
- def updete
+ def update
   book = Book.find(params[:id])
   book.update(book_params)
   redirect_to book_path(book.id)

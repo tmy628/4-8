@@ -5,10 +5,11 @@ Rails.application.routes.draw do
   post 'books' => 'books#create'
 
   # .../books/1 や .../books/3 に該当する
-  get 'books/:id' => 'books#show'
+  get 'books/:id' => 'books#show', as: 'show_book'
   get 'books/edit' => 'books#edit'
   get 'books/:id/edit' => 'books#edit', as: 'edit_book'
-  patch 'book/:id' => 'books#update', as: 'update_book'
+  patch '/books/:id' => 'books#update', as: 'update_book'
+  # 'book/:id' → book"s"が抜けてた？
 
   delete 'books/:id' => 'books#destroy', as: 'destroy_book'
 
