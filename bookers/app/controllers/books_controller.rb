@@ -1,16 +1,21 @@
 class BooksController < ApplicationController
  def index
    @books = Book.all
+   # 投稿一覧
    @book = Book.new
+   # 新規投稿
  end
 
  def create
-  #1.データを新規登録するためのインスタンス作成
-  book = Book.new(book_params)
-  #2. データをデータベースに保存するためのsaveメソッド実行
-  book.save
-  #3.Books画面へリダイレクト → edirect_to '/books'を削除 → 詳細画面へリダイレクト
-  redirect_to books_path(book.id)
+  @book = Book.new(book_params)
+  if @book.save
+   # @を付けていなかった
+   flash[:notice] = "Book was successfully created."
+   redirect_to show_book_path(@book)
+  else
+   #書き込み失敗
+   render :index
+  end
  end
 
  def show
@@ -26,14 +31,18 @@ class BooksController < ApplicationController
 
  def update
   book = Book.find(params[:id])
-  book.update(book_params)
-  redirect_to books_path(book.id) #詳細画面へリダイレクトさせたい
+  if book.update(book_params)
+   flash[:notice] = "Book was successfully updated."
+  redirect_to show_book_path(book.id)
+  end
  end
 
  def destroy
   book = Book.find(params[:id]) #データ(レコード)を1件取得
-  book.destroy #データ（レコード）を削除
-  redirect_to books_path
+  if book.destroy #データ（レコード）を削除
+   flash[:notice] = "Book was successfully destroyed."
+   redirect_to books_path(book.id)
+  end
  end
 
  private
