@@ -1,5 +1,4 @@
 class BooksController < ApplicationController
- protect_from_forgery #追記
  def index
    @books = Book.all
    @book = Book.new
@@ -28,12 +27,12 @@ class BooksController < ApplicationController
  def update
   book = Book.find(params[:id])
   book.update(book_params)
-  redirect_to book_path(book.id)
+  redirect_to books_path(book.id) #詳細画面へリダイレクトさせたい
  end
 
  def destroy
   book = Book.find(params[:id]) #データ(レコード)を1件取得
-  book.destroy #データ（レコード）を削除r
+  book.destroy #データ（レコード）を削除
   redirect_to books_path
  end
 
