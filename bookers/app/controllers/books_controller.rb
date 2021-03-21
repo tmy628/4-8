@@ -45,7 +45,7 @@ class BooksController < ApplicationController
    # 投稿に成功した場合
    # bookではなく@book
    flash[:notice] = "Book was successfully updated."
-  redirect_to book_path(@book.id)
+  redirect_to book_path(@book)
   # 詳細画面へリダイレクト
   else
    #書き込み失敗
@@ -58,7 +58,7 @@ class BooksController < ApplicationController
   book = Book.find(params[:id]) #データ(レコード)を1件取得
   if book.destroy #データ（レコード）を削除
    flash[:notice] = "Book was successfully destroyed."
-   redirect_to books_path(book.id)
+   redirect_to books_path(@book)
    # 一覧画面へリダイレクト
   end
  end
